@@ -165,3 +165,5 @@ async def send_message_daybefore(ctx, volunteer, hour, int):
     else:
         await ctx.send(f"Hey, {volunteer.username}! You're on shift for set up the day before the event. Please be on time for your shift.")
         
+bot.run(os.getenv('DISCORD_TOKEN'))
+
