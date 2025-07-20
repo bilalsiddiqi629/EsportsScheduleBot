@@ -161,9 +161,9 @@ async def send_message_daybefore(ctx, volunteer, hour, int):
     member = discord.utils.get(guild.members, name=volunteer.username)
     await asyncio.sleep(hour)
     if member:
-        await ctx.send(f"Hey, {member.mention}! You're on shift for set up the day before the event. Please be on time for your shift.")
+        await ctx.send(f"Hey, {member.mention}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
     else:
-        await ctx.send(f"Hey, {volunteer.username}! You're on shift for set up the day before the event. Please be on time for your shift.")
+        await ctx.send(f"Hey, {volunteer.username}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
         
 bot.run(os.getenv('DISCORD_TOKEN'))
 
