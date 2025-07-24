@@ -179,11 +179,6 @@ async def schedule(ctx, inputDate=None):
             increment = increment + 1
 
             
-       
-                      
-                  
-    
-
 async def send_message(ctx, volunteer, hour, int, lines):
     guild = ctx.guild
     member = discord.utils.get(guild.members, name=volunteer[lines[1]])
@@ -193,13 +188,25 @@ async def send_message(ctx, volunteer, hour, int, lines):
     else:
         await ctx.send(f"Hey, {volunteer[lines[1]]}! You're on shift as {volunteer[lines[int]]}! Please be on time for your shift.")
 
-async def send_message_daybefore(ctx, volunteer, hour, int):
-    guild = ctx.guild
-    member = discord.utils.get(guild.members, name=volunteer[1])
-    await asyncio.sleep(hour)
-    if member:
-        await ctx.send(f"Hey, {member.mention}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
-    else:
-        await ctx.send(f"Hey, {volunteer.username}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
-        
+
+@bot.command   
+async def clear(ctx):
+    current_task = asyncio.current_task()
+    tasks = []
+
+    for task in asyncio.all_tasks():
+         if task != current_task and not task.done():
+               tasks.append(task)
+
+    for task in tasks:
+        task.cancel()
+    
+    if tasks: 
+        await asyncio.gather(*tasks, return_exceptions=True)
+    
+    await ctx.send(f"Cancelled {len(tasks)} tasks.")
+
+
+
+
 bot.run(os.getenv('DISCORD_TOKEN'))
