@@ -39,10 +39,8 @@ async def on_message(message):
 @bot.command()
 async def schedule(ctx, inputDate=None):
     lines = []
-    schedule_list = []
     list_of_volunteers = []
     i = 0
-    chunk_size = 18
 
     if inputDate:
             try:
@@ -76,89 +74,128 @@ async def schedule(ctx, inputDate=None):
         text = page.get_text()
         lines += text.strip().split("\n")
 
+        increment = 0
+
+        while (increment < len(lines)/18 - 1):
+            volunteer = {
+                lines[0]: lines[18 + (18 * increment)],
+                lines[1]: lines[19 + (18 * increment)],
+                lines[2]: lines[20 + (18 * increment)],
+                lines[3]: lines[21 + (18 * increment)],
+                lines[4]: lines[22 + (18 * increment)],
+                lines[5]: lines[23 + (18 * increment)],
+                lines[6]: lines[24 + (18 * increment)],
+                lines[7]: lines[25 + (18 * increment)],
+                lines[8]: lines[26 + (18 * increment)],
+                lines[9]: lines[27 + (18 * increment)],
+                lines[10]: lines[28 + (18 * increment)],
+                lines[11]: lines[29 + (18 * increment)],
+                lines[12]: lines[30 + (18 * increment)],
+                lines[13]: lines[31 + (18 * increment)],
+                lines[14]: lines[32 + (18 * increment)],
+                lines[15]: lines[33 + (18 * increment)],
+                lines[16]: lines[34 + (18 * increment)],
+                lines[17]: lines[35 + (18 * increment)],
+            }
+            list_of_volunteers.append(volunteer)
+            increment = increment + 1
+
     doc.close()
 
- 
-    while (i < len(lines)):
-        chunk = lines[i:i + chunk_size]
-        i = i + 18
-        if len(chunk) == chunk_size:
-            schedule_list.append(chunk)
-
-    
-    for row in schedule_list:
-        v = Volunteer(row[1])
-        
-        for x in range(2, 18):
-            if row[x] != 'N/A':
-                v.role.append(row[x])
-                if x == 2:
-                    v.time.append(2) 
-                elif x == 3:
-                    v.time.append(10)     
-                elif x == 4:
-                    v.time.append(11)
-                elif x == 5:
-                    v.time.append(12)
-                elif x == 6:
-                    v.time.append(13)
-                elif x == 7:
-                    v.time.append(14)
-                elif x == 8:
-                    v.time.append(15)
-                elif x == 9:
-                    v.time.append(16)
-                elif x == 10:
-                    v.time.append(17)
-                elif x == 11:
-                    v.time.append(18)
-                elif x == 12:
-                    v.time.append(19)
-                elif x == 13:
-                    v.time.append(20)
-                elif x == 14:
-                    v.time.append(21)
-                elif x == 15:
-                    v.time.append(22)
-                elif x == 16:
-                    v.time.append(23)
-        
-        list_of_volunteers.append(v)
 
     await ctx.send("Done. Scheduled messages will be sent out on the inputted date.")
 
-    list_of_volunteers_no_header = list_of_volunteers[1:]  
-    for vol in list_of_volunteers_no_header:
-        x = 0
-        while (x < len(vol.role)):
-            if (vol.time[x] == 2): 
-                target = datetime.combine(targetDate, datetime.min.time())
-                reminder = target - timedelta(days=1)
-                reminder = reminder.replace(hour=20, minute = 0, second = 0, microsecond=0)
-                delay = (reminder - now).total_seconds()
-                asyncio.create_task(send_message_daybefore(ctx, vol, delay, x))
+    for vol in list_of_volunteers:
+        increment = 2
+        while (increment < 18):
+            if (vol[lines[increment]] != 'N/A'):
+                if increment == 2:
+                     target = datetime.combine(targetDate, datetime.min.time()) - timedelta(days=1)
+                     target = target.replace(hour = 20, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()      
+                elif increment == 3:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 10, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()                    
+                elif increment == 4:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 11, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 5:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 12, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 6:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 13, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 7:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 14, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 8:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 15, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 9:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 16, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 10:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 17, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 11:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 18, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 12:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 19, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 13:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 20, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 14:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 21, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 15:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 22, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 16:
+                     target = datetime.combine(targetDate, datetime.min.time())
+                     target = target.replace(hour = 23, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+                elif increment == 17:
+                     target = datetime.combine(targetDate, datetime.min.time()) + timedelta(days=1)
+                     target = target.replace(hour = 0, minute = 0, second = 0, microsecond=0)
+                     delay = (target - now).total_seconds()
+
+                asyncio.create_task(send_message(ctx, vol, delay, increment, lines))
                 
-            else:
-                target = datetime.combine(targetDate, datetime.min.time())
-                target = target.replace(hour=vol.time[x], minute = 0, second = 0, microsecond=0)
-                delay = (target - now).total_seconds()
-                asyncio.create_task(send_message(ctx, vol, delay, x))
+            increment = increment + 1
+
             
+       
+                      
+                  
+    
 
-            x = x+1
-
-async def send_message(ctx, volunteer, hour, int):
+async def send_message(ctx, volunteer, hour, int, lines):
     guild = ctx.guild
-    member = discord.utils.get(guild.members, name=volunteer.username)
+    member = discord.utils.get(guild.members, name=volunteer[lines[1]])
     await asyncio.sleep(hour)
     if member:
-        await ctx.send(f"Hey, {member.mention}! You're on shift as {volunteer.role[int]}! Please be on time for your shift.")
+        await ctx.send(f"Hey, {member.mention}! You're on shift as {volunteer[lines[int]]}! Please be on time for your shift.")
     else:
-        await ctx.send(f"Hey, {volunteer.username}! You're on shift as {volunteer.role[int]}! Please be on time for your shift.")
+        await ctx.send(f"Hey, {volunteer[lines[1]]}! You're on shift as {volunteer[lines[int]]}! Please be on time for your shift.")
 
 async def send_message_daybefore(ctx, volunteer, hour, int):
     guild = ctx.guild
-    member = discord.utils.get(guild.members, name=volunteer.username)
+    member = discord.utils.get(guild.members, name=volunteer[1])
     await asyncio.sleep(hour)
     if member:
         await ctx.send(f"Hey, {member.mention}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
@@ -166,4 +203,3 @@ async def send_message_daybefore(ctx, volunteer, hour, int):
         await ctx.send(f"Hey, {volunteer.username}! You're on shift for set up the day before the event at 8pm. Please be on time for your shift.")
         
 bot.run(os.getenv('DISCORD_TOKEN'))
-
