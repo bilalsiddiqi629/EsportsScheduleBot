@@ -112,72 +112,86 @@ async def schedule(ctx, inputDate=None):
         while (increment < 18):
             if (vol[lines[increment]] != 'N/A'):
                 now = datetime.now()  
-                await ctx.send(f"Server time: {now}")
-                await ctx.send(f"Server timezone: {now.astimezone().tzinfo}")
-                
+
                 if increment == 2:
                      target = datetime.combine(targetDate, datetime.min.time()) - timedelta(days=1)
                      target = target.replace(hour = 20, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()      
                 elif increment == 3:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 10, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()                    
                 elif increment == 4:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 11, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 5:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 12, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 6:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 13, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 7:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 14, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 8:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 15, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 9:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 16, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 10:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 17, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 11:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 18, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 12:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 19, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 13:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 20, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 14:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 21, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 15:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 22, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 16:
                      target = datetime.combine(targetDate, datetime.min.time())
                      target = target.replace(hour = 23, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
                 elif increment == 17:
                      target = datetime.combine(targetDate, datetime.min.time()) + timedelta(days=1)
                      target = target.replace(hour = 0, minute = 0, second = 0, microsecond=0)
+                     target = target + timedelta(hours=4)
                      delay = (target - now).total_seconds()
 
                 user_tasks.add(asyncio.create_task(send_message(ctx, vol, delay, increment, lines)))
