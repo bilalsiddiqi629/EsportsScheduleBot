@@ -189,7 +189,7 @@ async def send_message(ctx, volunteer, hour, int, lines):
         await ctx.send(f"Hey, {volunteer[lines[1]]}! You're on shift as {volunteer[lines[int]]}! Please be on time for your shift.")
 
 
-@bot.command   
+@bot.command()
 async def clear(ctx):
     current_task = asyncio.current_task()
     tasks = []
