@@ -10,6 +10,8 @@ import asyncio
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")  
 
+user_tasks = set()
+
 class Volunteer:
     def __init__(self, username):
         self.username = username
@@ -35,6 +37,7 @@ async def on_message(message):
         return
 
     await bot.process_commands(message)
+
 
 @bot.command()
 async def schedule(ctx, inputDate=None):
@@ -174,7 +177,8 @@ async def schedule(ctx, inputDate=None):
                      target = target.replace(hour = 0, minute = 0, second = 0, microsecond=0)
                      delay = (target - now).total_seconds()
 
-                asyncio.create_task(send_message(ctx, vol, delay, increment, lines))
+                user_tasks.add(asyncio.create_task(send_message(ctx, vol, delay, increment, lines)))
+                
                 
             increment = increment + 1
 
@@ -188,24 +192,15 @@ async def send_message(ctx, volunteer, hour, int, lines):
     else:
         await ctx.send(f"Hey, {volunteer[lines[1]]}! You're on shift as {volunteer[lines[int]]}! Please be on time for your shift.")
 
-
 @bot.command()
 async def clear(ctx):
-    current_task = asyncio.current_task()
-    tasks = []
-
-    for task in asyncio.all_tasks():
-         if task != current_task and not task.done():
-               tasks.append(task)
-
-    for task in tasks:
-        task.cancel()
-    
-    if tasks: 
-        await asyncio.gather(*tasks, return_exceptions=True)
-    
-    await ctx.send(f"Cancelled {len(tasks)} tasks.")
-
+   await ctx.send(f"Clearing schedule. Please wait....")
+   for task in list(user_tasks):
+       task.cancel()
+   
+   count = len(user_tasks)
+   user_tasks.clear()
+   await ctx.send(f"Schedule is cleared. Cancelled {count} tasks.")
 
 
 
