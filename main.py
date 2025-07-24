@@ -55,7 +55,6 @@ async def schedule(ctx, inputDate=None):
             await ctx.send("No date provided. Will use today's date as default.")
             targetDate = datetime.now().date()   
 
-    now = datetime.now()  
 
     if not ctx.message.attachments:
         await ctx.send("Please attach the schedule in PDF format.")
@@ -112,6 +111,8 @@ async def schedule(ctx, inputDate=None):
         increment = 2
         while (increment < 18):
             if (vol[lines[increment]] != 'N/A'):
+                now = datetime.now()  
+                
                 if increment == 2:
                      target = datetime.combine(targetDate, datetime.min.time()) - timedelta(days=1)
                      target = target.replace(hour = 20, minute = 0, second = 0, microsecond=0)
