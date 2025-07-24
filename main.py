@@ -112,7 +112,7 @@ async def schedule(ctx, inputDate=None):
         while (increment < 18):
             if (vol[lines[increment]] != 'N/A'):
                 now = datetime.now()  
-                 await ctx.send(f"Server time: {now}")
+                await ctx.send(f"Server time: {now}")
                 await ctx.send(f"Server timezone: {now.astimezone().tzinfo}")
                 
                 if increment == 2:
